@@ -1,0 +1,15 @@
+#include <stdio.h>
+#include <string.h>
+
+char arr[100];
+char arr_1[100] = "If one loses honesty, he will lose everything.";
+
+int main() {
+
+	gets(arr);
+	
+	if (strcmp(arr, arr_1) == 0)printf("I promise I do not cheat in the exam.\n");
+	else printf("If one loses honesty, he will lose everything.\n");
+	
+	return 0;
+}
