@@ -1,0 +1,56 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+
+int arr[1000] = { 0 };
+
+int compare(const void* a, const void* b)
+{
+    return (*(int*)a - *(int*)b);
+}
+
+int main() {
+   
+    int pos, t, sum = 0;
+
+    scanf("%d%d", &t, &pos);
+
+    for (int i = 0; i < t; i++)
+    {
+        scanf("%d", &arr[i]);
+    }
+
+ 
+        qsort(arr, t, sizeof(int), compare);
+
+        for (int i = 0; i < t; i++)
+        {
+            int min = 10000;
+            int flag = 0;
+
+            for (int j = 0; j < t; j++)
+            {
+                if (min > abs(arr[j] - pos))
+                {
+                    flag = j;
+
+                    min = abs(arr[j] - pos);
+                }
+                else if (min == abs(arr[j] - pos))
+                {
+                    if (flag > j)flag = j;
+                }
+            }
+
+            pos = arr[flag];
+            sum += min;
+            printf("%d ", pos);
+
+            arr[flag] = -20000;
+        }
+    
+    
+    printf("\n%d", sum);
+
+    return 0;
+}
