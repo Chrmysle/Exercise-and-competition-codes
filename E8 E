@@ -1,0 +1,53 @@
+#include <stdio.h>
+#include <string.h>
+
+char arr_1[200000] = { 0 }; 
+char arr_2[200000] = { 0 };
+char arr_3[200000] = { 0 };
+
+int main() {
+    int flag_1 = 0;
+    int flag_2 = 0;
+
+    while ((arr_1[flag_1] = getchar()) != '+' && arr_1[flag_1] != '\n') {
+        flag_1++;
+    }
+    arr_1[flag_1] = 0; 
+
+    while ((arr_2[flag_2] = getchar()) != '=' && arr_2[flag_2] != '\n') {
+        flag_2++;
+    }
+    arr_2[flag_2] = 0; 
+
+    for (int i = 0; i < flag_1 / 2; i++) {
+        char temp = arr_1[i];
+        arr_1[i] = arr_1[flag_1 - 1 - i];
+        arr_1[flag_1 - 1 - i] = temp;
+    }
+
+    for (int i = 0; i < flag_2 / 2; i++) {
+        char temp = arr_2[i];
+        arr_2[i] = arr_2[flag_2 - 1 - i];
+        arr_2[flag_2 - 1 - i] = temp;
+    }
+
+    int carry = 0;
+    int max_len = flag_1 > flag_2 ? flag_1 : flag_2;
+    int i;
+
+    for (i = 0; i < max_len || carry; i++) {
+        int sum = carry;
+        if (i < flag_1) sum += arr_1[i] - '0';
+        if (i < flag_2) sum += arr_2[i] - '0';
+        arr_3[i] = (sum % 10) + '0';
+        carry = sum / 10;
+    }
+
+    // 输出结果
+    for (int j = i - 1; j >= 0; j--) {
+        putchar(arr_3[j]);
+    }
+    putchar('\n');
+
+    return 0;
+}
