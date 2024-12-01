@@ -1,0 +1,53 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+char arr[101];
+
+// Compare function for qsort
+int compare(const void* p1, const void* p2) {
+    return strcmp(*(const char**)p1, *(const char**)p2);
+}
+
+int main() {
+
+    scanf("%s", arr);
+
+    int length = strlen(arr);
+    int count = 0, num;
+
+    // 动态分配指针数组，用于存储所有子串的指针
+    char** total = (char**)malloc(30030002 * sizeof(char*));
+
+    for (int i = 0; i < length; i++) {
+        for (int j = 1; j <= length - i; j++) {
+            // 为每个子串分配内存
+            total[count] = (char*)malloc((j + 1) * sizeof(char));
+            if (!total[count]) {
+                perror("Memory allocation failed");
+                return 1;
+            }
+            strncpy(total[count], &arr[i], j);
+            total[count][j] = '\0';
+            count++;
+        }
+    }
+
+    // 排序子串
+    qsort(total, count, sizeof(char*), compare);
+
+    // 输入需要查询的子串编号
+    scanf("%d", &num);
+
+    
+    if (num <= count)printf("%s\n", total[num - 1]);
+    else printf("-1");
+
+    // 释放内存
+    for (int i = 0; i < count; i++) {
+        free(total[i]);
+    }
+    free(total);
+
+    return 0;
+}
